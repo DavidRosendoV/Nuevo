@@ -1,0 +1,80 @@
+package gauss;
+
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author pc
+ */
+public class Gauss {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        JOptionPane.showMessageDialog(null,"Solucion de Ecuaciones Lineales por el metodo de Gauss");
+        int i;
+        int j;
+        int s;
+        int k;
+        int h;
+        int n;
+        double d;
+        double m[][];
+        double r[];
+        double x[];
+        // recordar que el num. de incognitas y ecu. deben ser iguales.
+        n=Integer.parseInt(JOptionPane.showInputDialog("ingrese el numero de incognitas"));
+        m=new double[n][n];
+        r= new double [n];
+        x= new double [n];
+        
+        //recordar que la Diagonal principal de la matriz  de coeficientes no puede tener ceros.
+        for (i=0;i<=n-1;i++){
+            k=i+1;
+            r[i]=Double.parseDouble(JOptionPane.showInputDialog("ingrese el elemento"+k+"del vector"));
+            x[i]=0;
+            for (j=0;j<=n-1;j++){
+                h=j+1;
+                m[i][j]=Double.parseDouble(JOptionPane.showInputDialog("ingrese el elemento"+k+h+"de la matriz de coeficientes"));
+                
+            }
+            
+        }
+        // vemos que este ciclo convierte  la triangular inferior en ceros 
+        for(i=0;i<n;i++){
+            for (j=i;j<n;j++){
+                
+                if(i==j){
+                    d=m[i][j];
+                for(s=0;s<n;s++){
+                    m[i][s]=((m[i][s])/d);
+                    
+                }
+                r[i]=((r[i])/d);
+            }  else{
+                    d=m[j][i];
+                    for (s=0;s<n;s++){
+                        m[j][s]=m[j][s]-(d*m[i][s]);
+                    }
+                    r[j]=r[j]-(d*r[i]);
+                }
+            
+            }
+        }
+                // a continuacion se calcula  el valor  de las incognitas
+                    for(i=n-1;i>=0;i--){
+                        double y=r[i];
+                        for(j=n-1;j>=i;j--){
+                            y=y-x[j]*m[i][j];
+                        }
+                        x[i]=y;
+                    }
+                    for(i=0;i<n;i++){
+                        k=i+1;
+                        JOptionPane.showMessageDialog(null,"El valor de la incognitax"+k+"es "+x[i]);
+                    }
+            
+        // TODO code application logic here
+    }
+}
